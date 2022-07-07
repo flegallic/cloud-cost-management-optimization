@@ -3,7 +3,7 @@ Nodejs Rest API example that supports token based authentication with JWT (JSONW
 
 ## Getting started DEMO
 - Use Thunder Client or Postman to send requests
-- In first, you have to create an account with body contents can be any valid JSON object, for example like this:
+- In first, you have to create an account with body contents can be any valid JSON object, for example like this: \
 POST Request [https://ccmo-itg.azurewebsites.net/api/common/auth/signup]
 ```
 {
@@ -13,7 +13,7 @@ POST Request [https://ccmo-itg.azurewebsites.net/api/common/auth/signup]
     "roles": ["Owner"],
     "projects":["06f1ab5c-42d5-48a3-a078-63e72fd0d099", "6b7f58f0-a973-42f3-91d6-b54585d7e42d"]
 }
-```
+``` \
 Response:
 ```
 {
@@ -27,8 +27,8 @@ Response:
 }
 ```
 
-- Log in and get a token
-POST Request [https://ccmo-itg.azurewebsites.net/api/common/auth/authorize?apiversion=2022-07-01]
+- Log in and get a token \
+POST Request [https://ccmo-itg.azurewebsites.net/api/common/auth/authorize?apiversion=2022-07-01] \
 Response:
 ```
 {
