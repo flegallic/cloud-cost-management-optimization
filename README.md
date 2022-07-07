@@ -13,7 +13,7 @@ POST Request [https://ccmo-itg.azurewebsites.net/api/common/auth/signup]
     "roles": ["Owner"],
     "projects":["06f1ab5c-42d5-48a3-a078-63e72fd0d099", "6b7f58f0-a973-42f3-91d6-b54585d7e42d"]
 }
-``` \
+```
 Response:
 ```
 {
