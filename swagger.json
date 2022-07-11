@@ -1,0 +1,443 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "0.0.1",
+      "title": "CCMO",
+      "description": "Cloud Cost Management and Optimization API"
+    },
+    "host": "https://ccmo-itg.azurewebsites.net",
+    "basePath": "/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+
+  "paths": {
+    "/api/common/auth/signup?apiversion={{version}}": {
+      "post": {
+        "tags": ["Create new user account"],
+        "summary": "",
+        "parameters": [
+            {
+                "name": "parameters",
+                "in": "body",
+                "required": true,
+                "schema": {
+                    "$ref": "#/definitions/signupparams"
+                }
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/signup"
+            }
+          }
+        }
+      }
+    },
+    "/api/common/auth/authorize?apiversion={{version}}": {
+      "post": {
+        "tags": ["Get info and access token"],
+        "summary": "",
+        "parameters": [
+            {
+                "name": "parameters",
+                "in": "body",
+                "required": true,
+                "schema": {
+                    "$ref": "#/definitions/authorizeparams"
+                }
+            }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/authorize"
+            }
+          }
+        }
+      }
+    },
+    "/api?apiversion={{version}}": {
+      "get": {
+        "tags": ["Get home page"],
+        "parameters": [
+          {
+              "name": "ccmo_access_key_id",
+              "in": "headers",
+              "required": true
+          },
+          {
+            "name": "ccmo_secret_access_key",
+            "in": "headers",
+            "required": true
+          },
+          {
+            "name": "Bearer Token",
+            "in": "Auth",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/api"
+            }
+          }
+        }
+      }
+    },
+    "/api/{{business_unit}}?apiversion={{version}}": {
+      "get": {
+        "tags": ["Get business unit page"],
+        "parameters": [
+          {
+              "name": "ccmo_access_key_id",
+              "in": "headers",
+              "required": true
+          },
+          {
+            "name": "ccmo_secret_access_key",
+            "in": "headers",
+            "required": true
+          },
+          {
+            "name": "Bearer Token",
+            "in": "Auth",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/group"
+            }
+          }
+        }
+      }
+    },
+    "/api/{{business_unit}}/project?apiversion={{version}}": {
+      "get": {
+        "tags": ["Get all projects by business unit"],
+        "parameters": [
+          {
+              "name": "ccmo_access_key_id",
+              "in": "headers",
+              "required": true
+          },
+          {
+            "name": "ccmo_secret_access_key",
+            "in": "headers",
+            "required": true
+          },
+          {
+            "name": "Bearer Token",
+            "in": "Auth",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/project"
+            }
+          }
+        }
+      }
+    },
+    "/api/{{business_unit}}/project/{{project_id}}?apiversion={{version}}": {
+      "get": {
+        "tags": ["Get project by ID"],
+        "parameters": [
+          {
+              "name": "ccmo_access_key_id",
+              "in": "headers",
+              "required": true
+          },
+          {
+            "name": "ccmo_secret_access_key",
+            "in": "headers",
+            "required": true
+          },
+          {
+            "name": "Bearer Token",
+            "in": "Auth",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/projectId"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Signup": {
+      "properties": {
+        "status": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+      }
+    },
+    "signup": {
+      "type": "array",
+      "$ref": "#/definitions/Signup"
+    },
+    "SignupParams": {
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "projects": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }   
+      }
+    },
+    "signupparams": {
+      "type": "array",
+      "$ref": "#/definitions/SignupParams"
+    },
+    "AuthorizeParams": {
+      "properties": {
+        "uuid": {
+            "type": "string"
+        },
+        "password": {
+            "type": "string"
+        }    
+      }
+    },
+    "authorizeparams": {
+      "type": "array",
+      "$ref": "#/definitions/AuthorizeParams"
+    },
+    "Authorize": {
+      "properties": {
+        "status": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "ccmo_access_key_id": {
+                    "type": "string"
+                  },
+                  "ccmo_secret_access_key": {
+                    "type": "string"
+                  },
+                  "groups": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "roles": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "projects": {
+                    "type": "string"
+                  },
+                  "authorization_request_url": {
+                      "type": "string"
+                  },
+                  "token": {
+                      "type": "string"
+                  },
+                  "expiresIn": {
+                    "type": "string"
+                  }
+                }
+            }
+        }
+      }
+    },
+    "authorize": {
+      "type": "array",
+      "$ref": "#/definitions/Authorize"
+    },
+    "Api": {
+      "properties": {
+        "status": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "api-version": {
+                    "type": "string"
+                  }
+                }
+            }
+        }
+      }
+    },
+    "api": {
+      "type": "array",
+      "$ref": "#/definitions/Api"
+    },
+    "Group": {
+      "properties": {
+        "status": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "groups": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "api-version": {
+                    "type": "string"
+                  }
+                }
+            }
+        }
+      }
+    },
+    "group": {
+      "type": "array",
+      "$ref": "#/definitions/Group"
+    },
+    "Project": {
+      "properties": {
+        "status": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "groups": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "projects": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "api-version": {
+                    "type": "string"
+                  }
+                }
+            }
+        }
+      }
+    },
+    "project": {
+      "type": "array",
+      "$ref": "#/definitions/Project"
+    },
+    "ProjectId": {
+      "properties": {
+        "status": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "type": "string"
+                  },
+                  "message": {
+                    "type": "string"
+                  },
+                  "groups": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "projects": {
+                    "type": "array",
+                    "items": {
+                      "type": "object"
+                    }
+                  },
+                  "api-version": {
+                    "type": "string"
+                  }
+                }
+            }
+        }
+      }
+    },
+    "projectId": {
+      "type": "array",
+      "$ref": "#/definitions/ProjectId"
+    }
+
+  }
+}

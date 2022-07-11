@@ -32,10 +32,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //connect to mongodb
 const db = require("./app/models/index");
-const dbConfig =  require("./app/config/database")
-db.mongoose.connect(`mongodb://${dbConfig.HOST}:${dbConfig.PORT}/${dbConfig.DB}`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
+db.mongoose.connect("mongodb://"+process.env.COSMOSDB_HOST+":"+process.env.COSMOSDB_PORT+"/"+process.env.COSMOSDB_DBNAME+"?ssl=true&replicaSet=globaldb", {
+   auth: {
+     username: process.env.COSMOSDB_USER,
+     password: process.env.COSMOSDB_PASSWORD
+   },
+ useNewUrlParser: true,
+ useUnifiedTopology: true,
+ retryWrites: false
 })
 .then(() => {
   console.log("Successfully connect to MongoDB.");

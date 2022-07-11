@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const db = require("../models/index");
 require('dotenv').config()
 const User = db.user;
-//const Role = db.role;
+const Role = db.role;
 const Group = db.group;
 const Project = db.project;
 const apiVersion = process.env.APIVERSION
@@ -45,6 +45,32 @@ verifyAuth = (req, res, next) => {
       });
     });
 };
+
+// //check Roles depreciated
+// verifyRole = (req, res, next) => {
+//   User.findById(req.decoded).exec((err, user) => {
+//     if (err) {
+//       return res.status(500).send({"status":{"code":"500 - Internal Server Error", "message":err}});
+//     }
+//     Role.find(
+//       {
+//         _id: { $in: user.roles }
+//       },
+//       (err, roles) => {
+//         if (err) {
+//           return res.status(500).send({"status":{"code":"500 - Internal Server Error", "message":err}});
+//         }
+//         for (let i = 0; i < roles.length; i++) {
+//           if (roles[i].name === process.env.ROLE0) {
+//             next();
+//             return;
+//           }
+//         }
+//         return res.status(403).send({"status":{"code":"403 - Forbidden","message":"You don't have sufficient privileges with this role"}});
+//       }
+//     );
+//   });
+// };
 
 verifyGroup = (req, res, next) => {
   User.findById(req.decoded).exec((err, user) => {

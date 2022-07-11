@@ -24,7 +24,8 @@ module.exports = function(app) {
     [
       verifySignUp.checkDuplicateUuidOrEmail,
       verifySignUp.checkRolesExisted,
-      verifySignUp.checkGroupsExisted
+      verifySignUp.checkGroupsExisted,
+      verifySignUp.checkProjectsExisted
     ],
     controller.signup
   );
